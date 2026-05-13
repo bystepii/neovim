@@ -22,7 +22,7 @@ nixInfo.lze.load({
   -- { import = MP:relpath('omnivium/lsp'),       category = 'lsp',
   --   enabled = nixInfo(false, 'settings', 'devMode') },
   -- { import = MP:relpath('omnivium/search'),    category = 'search' },
-  -- { import = MP:relpath('omnivium/ui'),         category = 'ui' },
+  { import = MP:relpath('omnivium/ui'),         category = 'ui' },
   -- { import = MP:relpath('omnivium/git'),       category = 'git',
   --   enabled = nixInfo(false, 'settings', 'devMode') },
   -- { import = MP:relpath('omnivium/markdown'),  category = 'markdown' },

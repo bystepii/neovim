@@ -1,5 +1,6 @@
 local MP = ...
 return {
+  { import = MP:relpath('mini-base16') },
   { import = MP:relpath('confirm-quit') },
   { import = MP:relpath('hardtime') },
   { import = MP:relpath('noice') },
