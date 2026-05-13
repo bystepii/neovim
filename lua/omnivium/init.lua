@@ -57,10 +57,10 @@ nixInfo.lze.load({
     import = MP:relpath('editing'),
     category = 'editing',
   },
-  -- {
-  --   import = MP:relpath('format'),
-  --   category = 'format',
-  -- },
+  {
+    import = MP:relpath('format'),
+    category = 'format',
+  },
   {
     import = MP:relpath('lsp'),
     category = 'lsp',

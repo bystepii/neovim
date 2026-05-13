@@ -344,25 +344,25 @@ in
       };
 
     # ---- FORMAT SPEC ----
-    # specs.format = {
-    #   after = [ "core" ];
-    #   lazy = true;
-    #   data = with pkgs.vimPlugins; [
-    #     conform-nvim
-    #   ];
-    #   extraPackages = with pkgs; [
+    specs.format = {
+      after = [ "core" ];
+      lazy = true;
+      data = with pkgs.vimPlugins; [
+        conform-nvim
+      ];
+      extraPackages = with pkgs; [
     #     fixjson
     #     kdlfmt
     #     shfmt
     #     shellharden
-    #     nixfmt
-    #     rustfmt
-    #     ruff
-    #     yamlfmt
+        nixfmt
+        rustfmt
+        ruff
+        yamlfmt
     #     prettier
-    #     stylua
-    #   ];
-    # };
+        stylua
+      ];
+    };
 
     # ---- LSP SPEC ----
     specs.lsp = {
@@ -388,14 +388,14 @@ in
       };
 
       extraPackages = with pkgs; [
-        #     bash-language-server
-        #     just-lsp
-        #     lua-language-server
+        bash-language-server
+        just-lsp
+        lua-language-server
         #     marksman
         nixd
         nix-doc
-        #     pyright
-        #     ruff
+        pyright
+        ruff
         #     taplo
         #     typos-lsp
         #     vscode-json-languageserver
