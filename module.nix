@@ -269,27 +269,79 @@ in
     # };
 
     # ---- EDITING SPEC ----
-    # specs.editing = {
-    #   after = [ "core" ];
-    #   lazy = true;
-    #   data = with pkgs.vimPlugins; [
-    #     comment-nvim
-    #     cutlass-nvim
-    #     indent-blankline-nvim
-    #     mini-ai
-    #     mini-surround
-    #     resession-nvim
-    #     vim-easy-align
-    #     nvim-treesitter-context
-    #     nvim-ts-autotag
-    #     # ---- Additional from introdus (some not in nixpkgs — see below) ----
-    #     # nvim-toggler     # NOT in nixpkgs — needs plugins-nvim-toggler flake input
-    #     # nvim-better-n    # NOT in nixpkgs — needs plugins-nvim-better-n flake input
-    #     # pick-resession   # NOT in nixpkgs — needs plugins-pick-resession flake input
-    #     # treesitter-textobjects # NOT in nixpkgs — needs plugins-treesitter-textobjects flake input
-    #     # vim-repeat       # already in core spec above
-    #   ];
-    # };
+    specs.editing =
+      let
+        treesitterDevPlugins = pkgs.vimPlugins.nvim-treesitter.withPlugins (
+          plugins: with plugins; [
+    #         asm
+    #         c
+    #         cmake
+    #         cpp
+            git_config
+            gitcommit
+            gitignore
+    #         go
+    #         java
+    #         javascript
+    #         jinja
+    #         jq
+            just
+    #         kconfig
+    #         kdl
+            lua
+    #         nasm
+    #         regex
+            rust
+    #         # typescript
+          ]
+        );
+      in
+      {
+        after = [ "core" ];
+        lazy = true;
+        data =
+          with pkgs.vimPlugins; [
+    #         comment-nvim
+    #         cutlass-nvim
+    #         indent-blankline-nvim
+    #         mini-ai
+    #         mini-surround
+    #         resession-nvim
+    #         vim-easy-align
+    #         nvim-treesitter-context
+    #         # ---- Additional from introdus (some not in nixpkgs — see below) ----
+    #         # nvim-toggler     # NOT in nixpkgs — needs plugins-nvim-toggler flake input
+    #         # nvim-better-n    # NOT in nixpkgs — needs plugins-nvim-better-n flake input
+    #         # pick-resession   # NOT in nixpkgs — needs plugins-pick-resession flake input
+    #         # treesitter-textobjects # NOT in nixpkgs — needs plugins-treesitter-textobjects flake input
+    #         # vim-repeat       # already in core spec above
+          ]
+          ++ [
+            (pkgs.vimPlugins.nvim-treesitter.withPlugins (
+              plugins: with plugins; [
+                bash
+                html
+                json
+                json5
+                just
+                markdown
+                nix
+                python
+    #             query
+                toml
+                yaml
+                zsh
+    #             # typescript
+              ]
+            ))
+          ]
+          ++ lib.optionals config.settings.devMode [
+            treesitterDevPlugins
+          ]
+          ++ [
+    #         nvim-ts-autotag
+          ];
+      };
 
     # ---- FORMAT SPEC ----
     # specs.format = {
@@ -463,6 +515,29 @@ in
     # ============================================================================
     # SPEC MODS — adds extraPackages + mainInfo fields to every spec
     # ============================================================================
+    # https://birdeehub.github.io/nix-wrapper-modules/neovim.html#tips-and-tricks
+    # specMods =
+    #   {
+    #     # parentSpec ? null,
+    #     # parentOpts ? null,
+    #     # parentName ? null,
+    #     # config,
+    #     ...
+    #   }:
+    #   {
+    #     # add an extraPackages field to the specs themselves
+    #     options.extraPackages = lib.mkOption {
+    #       type = lib.types.listOf wlib.types.stringable;
+    #       default = [ ];
+    #       description = "An extraPackages spec field to put packages to suffix to the PATH";
+    #     };
+    #
+    #     options.mainInfo = lib.mkOption {
+    #       type = wlib.types.attrsRecursive;
+    #       default = { };
+    #       description = "an optional mainInfo spec field to add to the main info plugin instead of the spec specific one";
+    #     };
+    #   };
     specMods = {
       options.extraPackages = lib.mkOption {
         type = lib.types.listOf wlib.types.stringable;

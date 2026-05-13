@@ -53,10 +53,10 @@ nixInfo.lze.load({
   --   import = MP:relpath('completion'),
   --   category = 'completion',
   -- },
-  -- {
-  --   import = MP:relpath('editing'),
-  --   category = 'editing',
-  -- },
+  {
+    import = MP:relpath('editing'),
+    category = 'editing',
+  },
   -- {
   --   import = MP:relpath('format'),
   --   category = 'format',
