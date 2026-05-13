@@ -1,5 +1,5 @@
 local MP = ...
 return {
-  { import = MP:relpath('omnivium/completion/blink') },
-  { import = MP:relpath('omnivium/completion/luasnip') },
+  { import = MP:relpath('blink') },
+  { import = MP:relpath('luasnip') },
 }

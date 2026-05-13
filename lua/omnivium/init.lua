@@ -1,3 +1,10 @@
+-- birdeevim trick: https://github.com/BirdeeHub/birdeevim/blob/fbf665/init.lua
+--
+-- NOTE: `local MP = ...` stores the module path passed by require() (eg
+--  "introdus.ui") because in lua ... accesses arguments. Then
+--  MP:relpath("nixInfo") can be used to reference "introdus.nixInfo", which
+--  eases refactoring when changing module paths.
+
 local MP = ...
 
 string.relpath = function(str, sub, n)
@@ -30,27 +37,45 @@ if vim.fn.isdirectory(after_dir) == 1 then
   vim.opt.rtp:append(after_dir)
 end
 
-vim.loader.enable()
+vim.loader.enable() -- byte code caching
 
-require(MP:relpath('nixinfo'))
+require(MP:relpath('nixinfo')) -- setup nixInfo and lze
 
 -- ===========================================================================
 -- PLUGIN CATEGORIES — COMMENTED OUT BY DEFAULT
 -- Uncomment entries to enable lazy loading for that category.
 -- Each entry corresponds to a spec in module.nix.
 -- ===========================================================================
+-- NOTE: neovim flakes that extend from introdus will include more plugins.
+--  Also see auto-loaded files in ./../plugin/ for options, keymaps, etc.
 nixInfo.lze.load({
-  -- { import = MP:relpath('completion'), category = 'completion' },
-  -- { import = MP:relpath('editing'),    category = 'editing' },
-  -- { import = MP:relpath('format'),     category = 'format' },
-  -- { import = MP:relpath('lsp'),        category = 'lsp',
-  --   enabled = nixInfo(false, 'settings', 'devMode') },
-  -- { import = MP:relpath('search'),    category = 'search' },
-  { import = MP:relpath('ui'),        category = 'ui' },
-  -- { import = MP:relpath('git'),        category = 'git',
-  --   enabled = nixInfo(false, 'settings', 'devMode') },
-  -- { import = MP:relpath('markdown'),  category = 'markdown' },
-  -- { import = MP:relpath('ai'),        category = 'ai',
-  --   enabled = nixInfo(false, 'settings', 'devMode') },
-  -- { import = MP:relpath('debug'),     category = 'debug' },
+  -- {
+  --   import = MP:relpath('completion'),
+  --   category = 'completion',
+  -- },
+  -- {
+  --   import = MP:relpath('editing'),
+  --   category = 'editing',
+  -- },
+  -- {
+  --   import = MP:relpath('format'),
+  --   category = 'format',
+  -- },
+  {
+    import = MP:relpath('lsp'),
+    category = 'lsp',
+    enabled = nixInfo(false, 'settings', 'devMode'),
+  },
+  -- {
+  --   import = MP:relpath('markdown'),
+  --   category = 'markdown',
+  -- },
+  -- {
+  --   import = MP:relpath('search'),
+  --   category = 'search',
+  -- },
+  {
+    import = MP:relpath('ui'),
+    category = 'ui',
+  },
 })

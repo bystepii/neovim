@@ -1,23 +1,17 @@
--- mini.surround and mini.ai configuration for markdown files
--- Support for [[link]] and {{citation}} style surroundings
-require('mini.surround').setup({
+vim.b.minisurround_config = {
   custom_surroundings = {
+    -- turns foo into [foo](<clipboard url>)
     l = {
-      input = { { '[[' }, { ']]' } },
-      output = { { '[[' }, { ']]' } },
+      output = function()
+        local url = vim.fn.getreg('+'):gsub('%s+', '')
+        return { left = '[', right = '](' .. url .. ')' }
+      end,
     },
-    c = {
-      input = { { '{{' }, { '}}' } },
-      output = { { '{{' }, { '}}' } },
+    -- turns foo into [foo]()
+    L = {
+      output = function()
+        return { left = '[', right = ']()' }
+      end,
     },
   },
-})
-
-require('mini.ai').setup({
-  custom_textobjects = {
-    c = require('mini.ai').gen_spec.treesitter({
-      a = '@comment.inner',
-      i = '@comment.outer',
-    }),
-  },
-})
+}

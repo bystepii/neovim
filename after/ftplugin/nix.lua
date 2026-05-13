@@ -1,23 +1,24 @@
--- mini.surround and mini.ai configuration for Nix files
--- Support for '' strings and ${} expansions
-require('mini.surround').setup({
+vim.b.minisurround_config = vim.tbl_deep_extend('force', vim.b.minisurround_config or {}, {
   custom_surroundings = {
-    s = {
-      input = { { "''" }, { "''" } },
-      output = { { "''" }, { "''" } },
+    -- Raw strings ''
+    r = {
+      input = { "''().-()''" },
+      output = { left = "''", right = "''" },
     },
-    d = {
-      input = { { '${' }, { '}' } },
-      output = { { '${' }, { '}' } },
+    -- Variable expansions
+    e = {
+      input = { '${().-()}' },
+      output = { left = '${', right = '}' },
     },
   },
 })
 
-require('mini.ai').setup({
+vim.b.miniai_config = vim.tbl_deep_extend('force', vim.b.miniai_config or {}, {
   custom_textobjects = {
-    e = require('mini.ai').gen_spec.treesitter({
-      a = '@embedded.i',
-      i = '@embedded.inner',
-    }),
+
+    -- Raw strings
+    r = { "''().-()''" },
+    -- Variable expansions
+    e = { '${().-()}' },
   },
 })

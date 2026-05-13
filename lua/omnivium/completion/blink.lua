@@ -16,21 +16,33 @@ return {
     event = 'DeferredUIEnter',
     after = function(_)
       require('blink.cmp').setup({
+        -- See :h blink-cmp-config-keymap for configuring keymaps
+        -- Also see ./luasnip.lua for additional keys, like node choices
         keymap = {
+          -- FIXME: unset defaults once done with the below
           preset = 'default',
+
+          -- These are the defaults per: https://cmp.saghen.dev/configuration/keymap.html
+
           ['<C-space>'] = false,
           ['<Up>'] = false,
           ['<Down>'] = false,
           ['<Tab>'] = false,
           ['<S-Tab>'] = false,
+
           ['<C-s>'] = { 'show', 'show_documentation', 'hide_documentation', 'fallback' },
           ['<C-t>'] = { 'show_signature', 'hide_signature', 'fallback' },
+
+          -- NOTE: c-e has some odd behavior, so is annoying if you over press
           ['<C-e>'] = { 'hide', 'hide_documentation', 'hide_signature', 'fallback' },
           ['<C-y>'] = { 'select_and_accept', 'fallback' },
+
           ['<C-k>'] = { 'select_prev', 'fallback_to_mappings' },
           ['<C-j>'] = { 'select_next', 'fallback_to_mappings' },
+
           ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
           ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
+
           ['<C-n>'] = { 'snippet_forward', 'fallback' },
           ['<C-p>'] = { 'snippet_backward', 'fallback' },
         },
@@ -42,10 +54,23 @@ return {
               auto_show = true,
             },
           },
+          sources = function()
+            local type = vim.fn.getcmdtype()
+            -- Search forward and backward
+            if type == '/' or type == '?' then
+              return { 'buffer' }
+            end
+            -- Commands
+            if type == ':' or type == '@' then
+              return { 'cmdline' }
+            end
+            return {}
+          end,
         },
         fuzzy = {
           sorts = {
             'exact',
+            -- defaults
             'score',
             'sort_text',
           },
@@ -112,6 +137,8 @@ return {
               enabled = function()
                 return vim.bo.filetype == 'gitcommit'
               end,
+              ---@module 'blink-cmp-conventional-commits'
+              ---@type blink-cmp-conventional-commits.Options
               opts = {},
             },
             spell = {
@@ -119,6 +146,9 @@ return {
               module = 'blink-cmp-spell',
               opts = {
                 use_cmp_spell_sorting = true,
+                -- Taken from https://github.com/ribru17/blink-cmp-spell README
+                -- Only enable source in `@spell` captures, and disable it
+                -- in tree-sitter `@nospell` captures.
                 enable_in_context = function()
                   local curpos = vim.api.nvim_win_get_cursor(0)
                   local captures =

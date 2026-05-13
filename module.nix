@@ -29,13 +29,26 @@ in
       devMode = lib.mkOption {
         type = lib.types.bool;
         default = false;
-        description = "Enables additional development plugins.";
+        example = false;
+        description = ''
+          Enables additional development plugins.
+
+          Setting this flag also implicitly will use an impure and hot reloadable
+          config via `unwrappedConfig`. If you don't want that, set `hotReload`
+          to `false`.
+        '';
       };
 
       terminalMode = lib.mkOption {
         type = lib.types.bool;
         default = false;
-        description = "Enable features for using neovim as your terminal and terminal multiplexer.";
+        example = false;
+        description = ''
+          Enable features for using neovim as your terminal and terminal multiplexer.
+
+          For gui environments this is best paired when using neovide instead
+          of ghostty/kitty/wezterm/etc.
+        '';
       };
 
       hotReload = lib.mkOption {
@@ -44,40 +57,52 @@ in
         example = false;
         description = ''
           When enabled, neovim will use a mutable impure config path.
-          This allows hot reloading of some settings. Defaults to the value of `devMode`.
+          This allows hot reloading of some settings. Defaults to the value of
+          `devMode`, but the exists so it can be forced off independently of
+          `devMode`.
           When disabled, an immutable pure config in the `/nix/store` will be used.
         '';
       };
 
+      # Have neovim use immutable config from /nix/store
       wrappedConfig = lib.mkOption {
         type = lib.types.either wlib.types.stringable lib.types.luaInline;
         default = "${configSource}";
         description = "Set of lua config files loaded into the /nix/store.";
       };
 
+      # Have neovim use raw config folder for faster prototyping
       unwrappedConfig = lib.mkOption {
         type = lib.types.nullOr (lib.types.either wlib.types.stringable lib.types.luaInline);
         default = null;
-        example = lib.generators.mkLuaInline "vim.uv.os_homedir() .. '/dev/nix/neovim'";
+        example = ''lib.generators.mkLuaInline "vim.uv.os_homedir() .. '/dev/nix/neovim'"'';
         description = ''
-          Set impure config path to load your config from.
-          This value is used when hotReload is true.
-        '';
+          Set can impure config path to load your config from. This can also be lua, but isn't explictily required.
+
+          This value is used when hotReload is true.'';
       };
 
       baseConfig = lib.mkOption {
         type = lib.types.nullOr lib.types.path;
         default = null;
-        description = "Base neovim config path for extending wrappers to reference.";
+        description = ''
+          Specify a base neovim config to load from a wrapper extending the
+          introdus neovim module.
+
+          This allows the introdus neovim config to be loaded at runtime. This
+          can point to an impure path to allow hot reloading of introdus
+          config, in addition to personal config.
+        '';
       };
 
-      defaultCommand = lib.mkOption {
+      defaultCommand = lib.mkOption rec {
         type = lib.types.str;
         default = "luaeval('Snacks.dashboard()')";
         example = "execute('enew')";
         description = ''
           A default expression to be run when invoking bare nvim/vim/vi command
-          while already nested inside a neovim terminal.
+          while already nested inside a neovim terminal. The expression will be
+          passed through lib.escapeShellArg.
         '';
       };
 
@@ -100,6 +125,13 @@ in
         description = "Font to set from external nix config.";
       };
 
+      # extraSpecs = lib.mkOption {
+      #   type = lib.types.attrsOf lib.types.any;
+      #   default = { };
+      #   description = "Extra specs to integrate";
+      # };
+
+      # Inform lua which top level specs are enabled
       cats = lib.mkOption {
         readOnly = true;
         type = lib.types.attrsOf lib.types.bool;
@@ -110,6 +142,8 @@ in
     nvim-lib = {
       pluginInputs = lib.mkOption {
         type = lib.types.listOf (lib.types.attrsOf wlib.types.stringable);
+        # Makes plugins autobuilt from our inputs available with
+        # `config.nvim-lib.neovimPlugins.<name_without_prefix>`
         default = [ inputs ];
         description = "List of inputs that may have external neovim plugin dependencies.";
       };
@@ -130,7 +164,8 @@ in
           lib.pipe inputAttrs [
             lib.attrNames
             (lib.filter (s: lib.hasPrefix prefix s))
-            (map (input:
+            (map (
+              input:
               let
                 name = lib.removePrefix prefix input;
               in
@@ -146,6 +181,7 @@ in
   };
 
   config = {
+    # Build a neovide wrapper
     hosts.neovide.nvim-host.enable = config.settings.neovide;
 
     settings.config_directory =
@@ -155,11 +191,20 @@ in
       else
         config.settings.wrappedConfig;
 
-    settings.aliases = [ "vi" "vim" ];
+    settings.aliases = [
+      "vi"
+      "vim"
+    ];
 
-    # If run nested inside a neovim terminal, forward to parent via --remote
+    # If run nested inside a neovim terminal, deal with it appropriately. --remote will pass args
+    # to ':drop', but if no argument was specified it will error, so just run some default expression.
+    # Otherwise, pass all the args through --remote. If not in nvim, just run as normal.
     runShell = [
+      # bash
       ''
+        # If we are nested in nvim already, and didn't provide arguments, run
+        # some sane default.
+        # If neovide is trying to run us, don't bother using rpc
         if ! ps -o ppid,comm -p $PPID | grep -q neovide && [[ $NVIM ]]; then
           if [ $# -eq 0 ]; then
             set -- --server $NVIM --remote-expr ${lib.escapeShellArg config.settings.defaultCommand}
@@ -167,11 +212,17 @@ in
             set -- --server $NVIM --remote "$@"
           fi
         fi
+        # This won't be set by neovide, but some terminal stuff expects it (checkhealth, etc)
         export TERM=xterm-256color
-        ${if config.settings.baseConfig != null then
-          ''export NVIM_BASE_CONFIG=${config.settings.baseConfig}''
-        else
-          ""
+        # If the wrapper has a baseConfig path set, expose it to neovim config
+        ${
+          if config.settings.baseConfig != null then
+            # bash
+            ''
+              export NVIM_BASE_CONFIG=${config.settings.baseConfig}
+            ''
+          else
+            ""
         }
       ''
     ];
@@ -262,29 +313,42 @@ in
     # };
 
     # ---- LSP SPEC ----
-    # specs.lsp = {
-    #   after = [ "core" ];
-    #   lazy = true;
-    #   enable = config.settings.devMode;
-    #   data = with pkgs.vimPlugins; [
-    #     lazydev-nvim
-    #     SchemaStore-nvim
-    #     nvim-lspconfig
-    #   ];
-    #   extraPackages = with pkgs; [
-    #     bash-language-server
-    #     just-lsp
-    #     lua-language-server
-    #     marksman
-    #     nixd
-    #     nix-doc
-    #     pyright
-    #     ruff
-    #     taplo
-    #     typos-lsp
-    #     vscode-json-languageserver
-    #   ];
-    # };
+    specs.lsp = {
+      after = [ "core" ];
+      lazy = true;
+      enable = config.settings.devMode;
+      data = with pkgs.vimPlugins; [
+        #     lazydev-nvim
+        #     SchemaStore-nvim
+        nvim-lspconfig
+      ];
+
+      mainInfo.nixdExtras = {
+        nixpkgs = "import ${lib.cleanSource pkgs.path} {}";
+        get_configs =
+          lib.generators.mkLuaInline
+            # lua
+            ''
+              function(type, path)
+                  return [[import ${./nixd.nix} "${pkgs.stdenv.hostPlatform.system}" "]] .. type .. [[" ]] .. (path or "./.")
+              end
+            '';
+      };
+
+      extraPackages = with pkgs; [
+        #     bash-language-server
+        #     just-lsp
+        #     lua-language-server
+        #     marksman
+        nixd
+        nix-doc
+        #     pyright
+        #     ruff
+        #     taplo
+        #     typos-lsp
+        #     vscode-json-languageserver
+      ];
+    };
 
     # ---- SEARCH SPEC ----
     # specs.search = {
@@ -309,32 +373,32 @@ in
       after = [ "core" ];
       lazy = true;
       data = with pkgs.vimPlugins; [
-    #     hardtime-nvim
-    #     lualine-nvim
-    #     neo-tree-nvim
-    #     noice-nvim
-    #     nvim-notify
-    #     smart-splits-nvim
-    #     tabby-nvim
-    #     todo-comments-nvim
-    #     trouble-nvim
-    #     which-key-nvim
-    #     # ---- Additional from introdus ----
-    #     # snacks-nvim     # needs patching — see snacks override below
-    #     # zen-mode       # NOT in nixpkgs — needs plugins-zen-mode flake input
-    #     # confirm-quit   # NOT in nixpkgs — needs plugins-confirm-quit flake input
-    #     # scope-nvim     # NOT in nixpkgs — from emergentmind-neovim
-          mini-base16    # NOT in nixpkgs — from emergentmind-neovim
-    #     # nvim-highlight-colors # NOT in nixpkgs — from emergentmind-neovim
-    #     # vim-illuminate # NOT in nixpkgs — from emergentmind-neovim
-    #     # nvim-numbertoggle # NOT in nixpkgs — from emergentmind-neovim
-    #     # modes         # NOT in nixpkgs — needs plugins-modes flake input
-    #     # screenkey     # NOT in nixpkgs — needs plugins-screenkey flake input
-    #     # toggleterm-nvim # NOT in nixpkgs — from emergentmind-neovim
+        #     hardtime-nvim
+        #     lualine-nvim
+        #     neo-tree-nvim
+        #     noice-nvim
+        #     nvim-notify
+        #     smart-splits-nvim
+        #     tabby-nvim
+        #     todo-comments-nvim
+        #     trouble-nvim
+        #     which-key-nvim
+        #     # ---- Additional from introdus ----
+        #     # snacks-nvim     # needs patching — see snacks override below
+        #     # zen-mode       # NOT in nixpkgs — needs plugins-zen-mode flake input
+        #     # confirm-quit   # NOT in nixpkgs — needs plugins-confirm-quit flake input
+        #     # scope-nvim     # NOT in nixpkgs — from emergentmind-neovim
+        mini-base16 # NOT in nixpkgs — from emergentmind-neovim
+        #     # nvim-highlight-colors # NOT in nixpkgs — from emergentmind-neovim
+        #     # vim-illuminate # NOT in nixpkgs — from emergentmind-neovim
+        #     # nvim-numbertoggle # NOT in nixpkgs — from emergentmind-neovim
+        #     # modes         # NOT in nixpkgs — needs plugins-modes flake input
+        #     # screenkey     # NOT in nixpkgs — needs plugins-screenkey flake input
+        #     # toggleterm-nvim # NOT in nixpkgs — from emergentmind-neovim
       ];
-    #   extraPackages = with pkgs; [
-    #     chafa
-    #   ];
+      #   extraPackages = with pkgs; [
+      #     chafa
+      #   ];
     };
 
     # ---- GIT SPEC ----
