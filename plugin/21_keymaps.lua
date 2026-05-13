@@ -131,9 +131,9 @@ local function tab_move(direction)
   end
 end
 
-local tab_navigation = require('better-n').create({ next = function() tab_move("right") end, prev = function() tab_move("left") end })
-vim.keymap.set(nvi, l .. "H",  tab_navigation.prev_key, { desc = 'Move tab to left' })
-vim.keymap.set(nvi, l .. "L",  tab_navigation.next_key, { desc = 'Move tab to right' })
+-- local tab_navigation = require('better-n').create({ next = function() tab_move("right") end, prev = function() tab_move("left") end })
+-- vim.keymap.set(nvi, l .. "H",  tab_navigation.prev_key, { desc = 'Move tab to left' })
+-- vim.keymap.set(nvi, l .. "L",  tab_navigation.next_key, { desc = 'Move tab to right' })
 
 vim.keymap.set(nvi, l .. "n",  vim.cmd.tabnew,       { silent = true, desc = 'Create unnamed tab' })
 vim.keymap.set(nvi, l .. "N",  create_named_tab,     { silent = true, desc = 'Create named tab' })

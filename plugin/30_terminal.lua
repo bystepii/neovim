@@ -1,4 +1,4 @@
-if nixInfo(false, 'settings', 'terminalMode') then
+if _G.nixInfo and nixInfo(false, 'settings', 'terminalMode') then
   vim.o.scrollback = -1 -- Allow infinite scrollback in terminal
   vim.o.cmdheight = 0
 
