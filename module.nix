@@ -382,7 +382,7 @@ in
         #     tabby-nvim
         #     todo-comments-nvim
         #     trouble-nvim
-        #     which-key-nvim
+        which-key-nvim
         #     # ---- Additional from introdus ----
         #     # snacks-nvim     # needs patching — see snacks override below
         #     # zen-mode       # NOT in nixpkgs — needs plugins-zen-mode flake input
