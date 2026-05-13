@@ -1,0 +1,8 @@
+result
+result-*
+tags
+Session.vim
+.luarc.json
+*.swp
+*.swo
+*~
