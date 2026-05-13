@@ -33,3 +33,24 @@ end
 vim.loader.enable()
 
 require(MP:relpath('nixinfo'))
+
+-- ===========================================================================
+-- PLUGIN CATEGORIES — COMMENTED OUT BY DEFAULT
+-- Uncomment entries to enable lazy loading for that category.
+-- Each entry corresponds to a spec in module.nix.
+-- ===========================================================================
+nixInfo.lze.load({
+  -- { import = MP:relpath('completion'), category = 'completion' },
+  -- { import = MP:relpath('editing'),    category = 'editing' },
+  -- { import = MP:relpath('format'),     category = 'format' },
+  -- { import = MP:relpath('lsp'),        category = 'lsp',
+  --   enabled = nixInfo(false, 'settings', 'devMode') },
+  -- { import = MP:relpath('search'),    category = 'search' },
+  { import = MP:relpath('ui'),        category = 'ui' },
+  -- { import = MP:relpath('git'),        category = 'git',
+  --   enabled = nixInfo(false, 'settings', 'devMode') },
+  -- { import = MP:relpath('markdown'),  category = 'markdown' },
+  -- { import = MP:relpath('ai'),        category = 'ai',
+  --   enabled = nixInfo(false, 'settings', 'devMode') },
+  -- { import = MP:relpath('debug'),     category = 'debug' },
+})

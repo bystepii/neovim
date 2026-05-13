@@ -94,5 +94,7 @@ vim.o.endofline = false
 -- Single status line at bottom of window for all windows
 vim.opt.laststatus = 3
 
--- Apply global color scheme set elsewhere
-vim.cmd.colorscheme(vim.g.colorscheme)
+-- Apply global color scheme set elsewhere (if defined)
+if vim.g.colorscheme then
+  vim.cmd.colorscheme(vim.g.colorscheme)
+end
