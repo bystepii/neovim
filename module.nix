@@ -351,22 +351,22 @@ in
     };
 
     # ---- SEARCH SPEC ----
-    # specs.search = {
-    #   after = [ "core" ];
-    #   lazy = true;
-    #   data = with pkgs.vimPlugins; [
-    #     telescope-nvim
+    specs.search = {
+      after = [ "core" ];
+      lazy = true;
+      data = with pkgs.vimPlugins; [
+        telescope-nvim
     #     telescope-fzf-native-nvim
     #     telescope-ui-select-nvim
     #     telescope-zoxide
     #     flash-nvim
     #     # ---- Additional from introdus ----
     #     # telescope-luasnip  # NOT in nixpkgs — needs plugins-telescope-luasnip flake input
-    #   ];
-    #   extraPackages = with pkgs; [
-    #     zoxide
-    #   ];
-    # };
+      ];
+      extraPackages = with pkgs; [
+        zoxide
+      ];
+    };
 
     # ---- UI SPEC ----
     specs.ui = {

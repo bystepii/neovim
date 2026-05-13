@@ -70,10 +70,10 @@ nixInfo.lze.load({
   --   import = MP:relpath('markdown'),
   --   category = 'markdown',
   -- },
-  -- {
-  --   import = MP:relpath('search'),
-  --   category = 'search',
-  -- },
+  {
+    import = MP:relpath('search'),
+    category = 'search',
+  },
   {
     import = MP:relpath('ui'),
     category = 'ui',
