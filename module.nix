@@ -440,7 +440,7 @@ in
         #     nvim-notify
         #     smart-splits-nvim
         #     tabby-nvim
-        #     todo-comments-nvim
+        todo-comments-nvim
         #     trouble-nvim
         which-key-nvim
         #     # ---- Additional from introdus ----

@@ -8,6 +8,6 @@ return {
   -- { import = MP:relpath('mini-surround') },
   -- { import = MP:relpath('nvim-toggler') },
   -- { import = MP:relpath('resession') },
-  -- { import = MP:relpath('todo-comments') },
+  { import = MP:relpath('todo-comments') },
   { import = MP:relpath('treesitter') },
 }
