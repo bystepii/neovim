@@ -305,8 +305,8 @@ in
             #         comment-nvim
             #         cutlass-nvim
             #         indent-blankline-nvim
-            #         mini-ai
-            #         mini-surround
+            mini-ai
+            mini-surround
             #         resession-nvim
             #         vim-easy-align
             #         nvim-treesitter-context
