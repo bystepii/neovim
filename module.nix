@@ -410,8 +410,8 @@ in
       data =
         (with pkgs.vimPlugins; [
           telescope-nvim
-          #     telescope-fzf-native-nvim
-          #     telescope-ui-select-nvim
+          telescope-fzf-native-nvim
+          telescope-ui-select-nvim
           #     telescope-zoxide
           #     flash-nvim
           #     # ---- Additional from introdus ----
