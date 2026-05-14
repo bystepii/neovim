@@ -49,10 +49,10 @@ require(MP:relpath('nixinfo')) -- setup nixInfo and lze
 -- NOTE: neovim flakes that extend from introdus will include more plugins.
 --  Also see auto-loaded files in ./../plugin/ for options, keymaps, etc.
 nixInfo.lze.load({
-  -- {
-  --   import = MP:relpath('completion'),
-  --   category = 'completion',
-  -- },
+  {
+    import = MP:relpath('completion'),
+    category = 'completion',
+  },
   {
     import = MP:relpath('editing'),
     category = 'editing',
@@ -60,6 +60,11 @@ nixInfo.lze.load({
   {
     import = MP:relpath('format'),
     category = 'format',
+  },
+  {
+    import = MP:relpath('git'),
+    enabled = nixInfo(false, 'settings', 'devMode'),
+    category = 'git',
   },
   {
     import = MP:relpath('lsp'),

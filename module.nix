@@ -414,7 +414,7 @@ in
         #     telescope-zoxide
         #     flash-nvim
         #     # ---- Additional from introdus ----
-        #     # telescope-luasnip  # NOT in nixpkgs — needs plugins-telescope-luasnip flake input
+        telescope-luasnip
       ];
       extraPackages = with pkgs; [
         zoxide
@@ -455,15 +455,15 @@ in
     };
 
     # ---- GIT SPEC ----
-    # specs.git = {
-    #   after = [ "core" ];
-    #   lazy = true;
-    #   enable = config.settings.devMode;
-    #   data = with pkgs.vimPlugins; [
-    #     gitsigns-nvim
-    #     neogit
-    #   ];
-    # };
+    specs.git = {
+      after = [ "core" ];
+      lazy = true;
+      enable = config.settings.devMode;
+      data = with pkgs.vimPlugins; [
+        gitsigns-nvim
+        # neogit
+      ];
+    };
 
     # ---- MARKDOWN SPEC ----
     # specs.markdown = {
