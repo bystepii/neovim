@@ -90,9 +90,9 @@ return {
     lazy = true,
     dep_of = { 'luasnip' },
   },
-  {
-    'vim-snippets',
-    lazy = true,
-    dep_of = { 'luasnip' },
-  },
+  -- {
+  --   'vim-snippets',
+  --   lazy = true,
+  --   dep_of = { 'luasnip' },
+  -- },
 }

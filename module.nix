@@ -258,10 +258,10 @@ in
       after = [ "core" ];
       lazy = true;
       data = with pkgs.vimPlugins; [
-        #     blink-cmp
-        #     blink-cmp-conventional-commits
-        #     blink-cmp-spell
-        #     colorful-menu-nvim
+        blink-cmp
+        blink-cmp-conventional-commits
+        blink-cmp-spell
+        colorful-menu-nvim
         friendly-snippets
         #     vim-snippets
         luasnip
