@@ -11,18 +11,37 @@
       url = "github:BirdeeHub/nix-wrapper-modules";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    ###
-    # Neovim plugins from outside nixpkgs, either for fetching latest source or
-    # because there is no package yet. See nvim-lib.neovimPlugins in module.nix
-    ###
-    # plugins-lze = {
-    #   url = "github:BirdeeHub/lze";
-    #   flake = false;
-    # };
-    # plugins-lzextras = {
-    #   url = "github:BirdeeHub/lzextras";
-    #   flake = false;
-    # };
+    ##
+    # Neovim plugins not tracked by nixpkgs or that require newer versions
+    ##
+    plugins-nvim-toggler = {
+      url = "github:nguyenvukhang/nvim-toggler";
+      flake = false;
+    };
+    plugins-nvim-better-n = {
+      url = "github:jonatan-branting/nvim-better-n";
+      flake = false;
+    };
+    plugins-telescope-luasnip = {
+      url = "github:benfowler/telescope-luasnip.nvim";
+      flake = false;
+    };
+    plugins-confirm-quit = {
+      url = "github:yutkat/confirm-quit.nvim";
+      flake = false;
+    };
+    plugins-treesitter-textobjects = {
+      url = "github:nvim-treesitter/nvim-treesitter-textobjects";
+      flake = false;
+    };
+    plugins-pick-resession = {
+      url = "github:scottmckendry/pick-resession.nvim";
+      flake = false;
+    };
+    plugins-zen-mode = {
+      url = "github:fidgetingbits/zen-mode.nvim?ref=fix-terminal";
+      flake = false;
+    };
   };
 
   outputs =

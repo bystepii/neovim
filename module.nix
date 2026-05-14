@@ -407,15 +407,22 @@ in
     specs.search = {
       after = [ "core" ];
       lazy = true;
-      data = with pkgs.vimPlugins; [
-        telescope-nvim
-        #     telescope-fzf-native-nvim
-        #     telescope-ui-select-nvim
-        #     telescope-zoxide
-        #     flash-nvim
-        #     # ---- Additional from introdus ----
-        telescope-luasnip
-      ];
+      data =
+        (with pkgs.vimPlugins; [
+          telescope-nvim
+          #     telescope-fzf-native-nvim
+          #     telescope-ui-select-nvim
+          #     telescope-zoxide
+          #     flash-nvim
+          #     # ---- Additional from introdus ----
+        ])
+        ++ lib.optionals config.settings.devMode (
+          lib.attrValues {
+            inherit (config.nvim-lib.neovimPlugins)
+              telescope-luasnip
+              ;
+          }
+        );
       extraPackages = with pkgs; [
         zoxide
       ];
