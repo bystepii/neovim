@@ -433,6 +433,7 @@ in
       after = [ "core" ];
       lazy = true;
       data = with pkgs.vimPlugins; [
+        fidget-nvim
         #     hardtime-nvim
         #     lualine-nvim
         #     neo-tree-nvim
