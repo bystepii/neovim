@@ -254,45 +254,45 @@ in
     # ============================================================================
 
     # ---- COMPLETION SPEC ----
-    # specs.completion = {
-    #   after = [ "core" ];
-    #   lazy = true;
-    #   data = with pkgs.vimPlugins; [
-    #     blink-cmp
-    #     blink-cmp-conventional-commits
-    #     blink-cmp-spell
-    #     colorful-menu-nvim
-    #     friendly-snippets
-    #     vim-snippets
-    #     luasnip
-    #   ];
-    # };
+    specs.completion = {
+      after = [ "core" ];
+      lazy = true;
+      data = with pkgs.vimPlugins; [
+        #     blink-cmp
+        #     blink-cmp-conventional-commits
+        #     blink-cmp-spell
+        #     colorful-menu-nvim
+        #     friendly-snippets
+        #     vim-snippets
+        luasnip
+      ];
+    };
 
     # ---- EDITING SPEC ----
     specs.editing =
       let
         treesitterDevPlugins = pkgs.vimPlugins.nvim-treesitter.withPlugins (
           plugins: with plugins; [
-    #         asm
-    #         c
-    #         cmake
-    #         cpp
+            #         asm
+            #         c
+            #         cmake
+            #         cpp
             git_config
             gitcommit
             gitignore
-    #         go
-    #         java
-    #         javascript
-    #         jinja
-    #         jq
+            #         go
+            #         java
+            #         javascript
+            #         jinja
+            #         jq
             just
-    #         kconfig
-    #         kdl
+            #         kconfig
+            #         kdl
             lua
-    #         nasm
-    #         regex
+            #         nasm
+            #         regex
             rust
-    #         # typescript
+            #         # typescript
           ]
         );
       in
@@ -300,21 +300,22 @@ in
         after = [ "core" ];
         lazy = true;
         data =
-          with pkgs.vimPlugins; [
-    #         comment-nvim
-    #         cutlass-nvim
-    #         indent-blankline-nvim
-    #         mini-ai
-    #         mini-surround
-    #         resession-nvim
-    #         vim-easy-align
-    #         nvim-treesitter-context
-    #         # ---- Additional from introdus (some not in nixpkgs — see below) ----
-    #         # nvim-toggler     # NOT in nixpkgs — needs plugins-nvim-toggler flake input
-    #         # nvim-better-n    # NOT in nixpkgs — needs plugins-nvim-better-n flake input
-    #         # pick-resession   # NOT in nixpkgs — needs plugins-pick-resession flake input
-    #         # treesitter-textobjects # NOT in nixpkgs — needs plugins-treesitter-textobjects flake input
-    #         # vim-repeat       # already in core spec above
+          with pkgs.vimPlugins;
+          [
+            #         comment-nvim
+            #         cutlass-nvim
+            #         indent-blankline-nvim
+            #         mini-ai
+            #         mini-surround
+            #         resession-nvim
+            #         vim-easy-align
+            #         nvim-treesitter-context
+            #         # ---- Additional from introdus (some not in nixpkgs — see below) ----
+            #         # nvim-toggler     # NOT in nixpkgs — needs plugins-nvim-toggler flake input
+            #         # nvim-better-n    # NOT in nixpkgs — needs plugins-nvim-better-n flake input
+            #         # pick-resession   # NOT in nixpkgs — needs plugins-pick-resession flake input
+            #         # treesitter-textobjects # NOT in nixpkgs — needs plugins-treesitter-textobjects flake input
+            #         # vim-repeat       # already in core spec above
           ]
           ++ [
             (pkgs.vimPlugins.nvim-treesitter.withPlugins (
@@ -327,11 +328,11 @@ in
                 markdown
                 nix
                 python
-    #             query
+                #             query
                 toml
                 yaml
                 zsh
-    #             # typescript
+                #             # typescript
               ]
             ))
           ]
@@ -339,7 +340,7 @@ in
             treesitterDevPlugins
           ]
           ++ [
-    #         nvim-ts-autotag
+            #         nvim-ts-autotag
           ];
       };
 
@@ -351,15 +352,15 @@ in
         conform-nvim
       ];
       extraPackages = with pkgs; [
-    #     fixjson
-    #     kdlfmt
-    #     shfmt
-    #     shellharden
+        #     fixjson
+        #     kdlfmt
+        #     shfmt
+        #     shellharden
         nixfmt
         rustfmt
         ruff
         yamlfmt
-    #     prettier
+        #     prettier
         stylua
       ];
     };
@@ -408,12 +409,12 @@ in
       lazy = true;
       data = with pkgs.vimPlugins; [
         telescope-nvim
-    #     telescope-fzf-native-nvim
-    #     telescope-ui-select-nvim
-    #     telescope-zoxide
-    #     flash-nvim
-    #     # ---- Additional from introdus ----
-    #     # telescope-luasnip  # NOT in nixpkgs — needs plugins-telescope-luasnip flake input
+        #     telescope-fzf-native-nvim
+        #     telescope-ui-select-nvim
+        #     telescope-zoxide
+        #     flash-nvim
+        #     # ---- Additional from introdus ----
+        #     # telescope-luasnip  # NOT in nixpkgs — needs plugins-telescope-luasnip flake input
       ];
       extraPackages = with pkgs; [
         zoxide
