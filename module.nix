@@ -262,7 +262,7 @@ in
         #     blink-cmp-conventional-commits
         #     blink-cmp-spell
         #     colorful-menu-nvim
-        #     friendly-snippets
+        friendly-snippets
         #     vim-snippets
         luasnip
       ];
