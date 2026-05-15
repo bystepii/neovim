@@ -307,6 +307,7 @@ in
             #         indent-blankline-nvim
             mini-ai
             mini-surround
+            nvim-autopairs
             #         resession-nvim
             #         vim-easy-align
             #         nvim-treesitter-context
