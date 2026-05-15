@@ -328,7 +328,7 @@ in
                 markdown
                 nix
                 python
-                #             query
+                query
                 toml
                 yaml
                 zsh
