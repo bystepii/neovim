@@ -3,6 +3,7 @@ return {
   { import = MP:relpath('mini-base16') },
   { import = MP:relpath('which-key') },
   { import = MP:relpath('fidget') },
+  { import = MP:relpath('neo-tree') },
   -- NOTE: uncomment below as you add plugins to specs.ui.data in module.nix
   -- { import = MP:relpath('confirm-quit') },
   -- { import = MP:relpath('hardtime') },

@@ -436,7 +436,7 @@ in
         fidget-nvim
         #     hardtime-nvim
         #     lualine-nvim
-        #     neo-tree-nvim
+        neo-tree-nvim
         #     noice-nvim
         #     nvim-notify
         #     smart-splits-nvim
