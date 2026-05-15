@@ -4,8 +4,7 @@ return {
     'vim-illuminate',
     event = 'DeferredUIEnter',
     after = function(plugin)
-      require('vim-illuminate').setup({})
+      require('illuminate').configure({})
     end,
   },
 }
-
