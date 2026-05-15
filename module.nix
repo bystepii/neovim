@@ -392,7 +392,7 @@ in
         bash-language-server
         just-lsp
         lua-language-server
-        #     marksman
+        marksman
         nixd
         nix-doc
         pyright
@@ -474,16 +474,16 @@ in
     };
 
     # ---- MARKDOWN SPEC ----
-    # specs.markdown = {
-    #   after = [ "core" ];
-    #   lazy = true;
-    #   data = with pkgs.vimPlugins; [
-    #     vim-markdown-toc
-    #     markdown-preview-nvim
-    #     render-markdown-nvim
-    #     obsidian-nvim
-    #   ];
-    # };
+    specs.markdown = {
+      after = [ "core" ];
+      lazy = true;
+      data = with pkgs.vimPlugins; [
+        #     vim-markdown-toc
+        markdown-preview-nvim
+        render-markdown-nvim
+        #     obsidian-nvim
+      ];
+    };
 
     # ---- AI SPEC ----
     # specs.ai = {
@@ -525,38 +525,28 @@ in
     # SPEC MODS — adds extraPackages + mainInfo fields to every spec
     # ============================================================================
     # https://birdeehub.github.io/nix-wrapper-modules/neovim.html#tips-and-tricks
-    # specMods =
-    #   {
-    #     # parentSpec ? null,
-    #     # parentOpts ? null,
-    #     # parentName ? null,
-    #     # config,
-    #     ...
-    #   }:
-    #   {
-    #     # add an extraPackages field to the specs themselves
-    #     options.extraPackages = lib.mkOption {
-    #       type = lib.types.listOf wlib.types.stringable;
-    #       default = [ ];
-    #       description = "An extraPackages spec field to put packages to suffix to the PATH";
-    #     };
-    #
-    #     options.mainInfo = lib.mkOption {
-    #       type = wlib.types.attrsRecursive;
-    #       default = { };
-    #       description = "an optional mainInfo spec field to add to the main info plugin instead of the spec specific one";
-    #     };
-    #   };
-    specMods = {
-      options.extraPackages = lib.mkOption {
-        type = lib.types.listOf wlib.types.stringable;
-        default = [ ];
+    specMods =
+      {
+        # parentSpec ? null,
+        # parentOpts ? null,
+        # parentName ? null,
+        # config,
+        ...
+      }:
+      {
+        # add an extraPackages field to the specs themselves
+        options.extraPackages = lib.mkOption {
+          type = lib.types.listOf wlib.types.stringable;
+          default = [ ];
+          description = "An extraPackages spec field to put packages to suffix to the PATH";
+        };
+
+        options.mainInfo = lib.mkOption {
+          type = wlib.types.attrsRecursive;
+          default = { };
+          description = "an optional mainInfo spec field to add to the main info plugin instead of the spec specific one";
+        };
       };
-      options.mainInfo = lib.mkOption {
-        type = wlib.types.attrsRecursive;
-        default = { };
-      };
-    };
 
     extraPackages = config.specCollect (acc: v: acc ++ (v.extraPackages or [ ])) [ ];
 

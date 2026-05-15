@@ -71,10 +71,10 @@ nixInfo.lze.load({
     category = 'lsp',
     enabled = nixInfo(false, 'settings', 'devMode'),
   },
-  -- {
-  --   import = MP:relpath('markdown'),
-  --   category = 'markdown',
-  -- },
+  {
+    import = MP:relpath('markdown'),
+    category = 'markdown',
+  },
   {
     import = MP:relpath('search'),
     category = 'search',
