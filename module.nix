@@ -434,7 +434,7 @@ in
       lazy = true;
       data = with pkgs.vimPlugins; [
         fidget-nvim
-        #     hardtime-nvim
+        hardtime-nvim
         lualine-nvim
         neo-tree-nvim
         #     noice-nvim
