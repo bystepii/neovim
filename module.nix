@@ -451,7 +451,7 @@ in
         #     # scope-nvim     # NOT in nixpkgs — from emergentmind-neovim
         mini-base16 # NOT in nixpkgs — from emergentmind-neovim
         nvim-highlight-colors # NOT in nixpkgs — from emergentmind-neovim
-        #     # vim-illuminate # NOT in nixpkgs — from emergentmind-neovim
+        vim-illuminate # NOT in nixpkgs — from emergentmind-neovim
         #     # nvim-numbertoggle # NOT in nixpkgs — from emergentmind-neovim
         #     # modes         # NOT in nixpkgs — needs plugins-modes flake input
         #     # screenkey     # NOT in nixpkgs — needs plugins-screenkey flake input
