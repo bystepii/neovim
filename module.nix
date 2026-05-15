@@ -435,7 +435,7 @@ in
       data = with pkgs.vimPlugins; [
         fidget-nvim
         #     hardtime-nvim
-        #     lualine-nvim
+        lualine-nvim
         neo-tree-nvim
         #     noice-nvim
         #     nvim-notify
