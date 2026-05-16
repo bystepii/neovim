@@ -83,4 +83,9 @@ nixInfo.lze.load({
     import = MP:relpath('ui'),
     category = 'ui',
   },
+  {
+    import = MP:relpath('ai'),
+    enabled = nixInfo(false, 'settings', 'devMode'),
+    category = 'ai',
+  },
 })

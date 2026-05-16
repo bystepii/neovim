@@ -261,6 +261,7 @@ in
         blink-cmp
         blink-cmp-conventional-commits
         blink-cmp-spell
+        blink-copilot
         colorful-menu-nvim
         friendly-snippets
         #     vim-snippets
@@ -375,6 +376,7 @@ in
         #     lazydev-nvim
         #     SchemaStore-nvim
         nvim-lspconfig
+        copilot-lsp
       ];
 
       mainInfo.nixdExtras = {
@@ -391,6 +393,7 @@ in
 
       extraPackages = with pkgs; [
         bash-language-server
+        copilot-language-server
         just-lsp
         lua-language-server
         marksman
@@ -487,17 +490,24 @@ in
     };
 
     # ---- AI SPEC ----
-    # specs.ai = {
-    #   after = [ "ui" "completion" ];
-    #   lazy = true;
-    #   enable = config.settings.devMode;
-    #   data = with pkgs.vimPlugins; [
-    #     codecompanion-nvim
-    #     # ---- Additional from emergentmind-neovim ----
-    #     # avante-nvim    # NOT in nixpkgs — from emergentmind-neovim
-    #     # blink-cmp-avante # NOT in nixpkgs — from emergentmind-neovim
-    #   ];
-    # };
+    specs.ai = {
+      after = [
+        "ui"
+        "completion"
+      ];
+      lazy = true;
+      enable = config.settings.devMode;
+      data = with pkgs.vimPlugins; [
+        # codecompanion-nvim
+        copilot-lua
+        # ---- Additional from emergentmind-neovim ----
+        # avante-nvim    # NOT in nixpkgs — from emergentmind-neovim
+        # blink-cmp-avante # NOT in nixpkgs — from emergentmind-neovim
+      ];
+      extraPackages = with pkgs; [
+        nodejs
+      ];
+    };
 
     # ---- DEBUG SPEC ----
     # specs.debug = {

@@ -75,6 +75,7 @@ return {
   },
   { import = MP:relpath('bash') },
   { import = MP:relpath('clang') },
+  { import = MP:relpath('copilot') },
   -- { import = MP:relpath('json') },
   { import = MP:relpath('just') },
   { import = MP:relpath('lua') },

@@ -8,6 +8,10 @@ return {
     dep_of = { 'blink.cmp' },
   },
   {
+    'blink-copilot',
+    dep_of = { 'blink.cmp' },
+  },
+  {
     'colorful-menu.nvim',
     on_plugin = { 'blink.cmp' },
   },
@@ -117,7 +121,16 @@ return {
           end,
         },
         sources = {
-          default = { 'spell', 'conventional_commits', 'lsp', 'path', 'snippets', 'buffer', 'omni' },
+          default = {
+            'copilot',
+            'spell',
+            'conventional_commits',
+            'lsp',
+            'path',
+            'snippets',
+            'buffer',
+            'omni',
+          },
           providers = {
             path = {
               score_offset = 50,
@@ -163,6 +176,15 @@ return {
                   end
                   return in_spell_capture
                 end,
+              },
+            },
+            copilot = {
+              name = 'copilot',
+              module = 'blink-copilot',
+              score_offset = 100,
+              async = true,
+              opts = {
+                max_completions = 3,
               },
             },
           },
