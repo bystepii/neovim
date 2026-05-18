@@ -6,7 +6,13 @@ inputs:
   pkgs,
   ...
 }:
-let
+(let
+  systemPkgs = pkgs;
+in let
+  pkgs = import inputs.nixpkgs {
+    system = systemPkgs.stdenv.hostPlatform.system;
+    config.allowUnfree = true;
+  };
   configSource = lib.fileset.toSource {
     root = ./.;
     fileset =
@@ -565,4 +571,4 @@ in
       config.specCollect (acc: v: acc ++ lib.optional (v.mainInfo or { } != { }) v.mainInfo) [ ]
     );
   };
-}
+})
