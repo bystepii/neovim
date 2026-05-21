@@ -425,7 +425,7 @@ inputs:
             telescope-fzf-native-nvim
             telescope-ui-select-nvim
             #     telescope-zoxide
-            #     flash-nvim
+            flash-nvim
             #     # ---- Additional from introdus ----
           ])
           ++ lib.optionals config.settings.devMode (
