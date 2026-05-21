@@ -25,7 +25,5 @@ vim.api.nvim_create_user_command('ReloadConfig', function()
   -- Force re-detection of filetype for the current buffer
   vim.cmd('filetype detect')
 
-  vim.cmd('ReloadSnippets')
-
   print('Configuration reloaded!')
 end, {})
