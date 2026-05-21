@@ -1,4 +1,19 @@
 -- stylua: ignore start
+-- note: plugin-specific keymaps are located in the plugin file
+--
+-- ========== modes legend ==========
+--
+--    "n" normal mode
+--    "i" insert mode
+--    "v" visual and select mode
+--    "s" select mode
+--    "t" terminal mode
+--    ""  normal, visual, select and operator-pending mode
+--    "x" visual mode only, without select
+--    "o" operator-pending mode
+--    "!" insert and command-line mode
+--    "l" insert, command-line and lang-arg mode
+--    "c" command-line mode
 
 local nv  = { "n", "x" }
 local nvi = { "n", "x", "i" }
@@ -214,3 +229,4 @@ vim.keymap.set('i', 'jk', '<ESC>:w<CR>', {noremap=true, silent=true})
 vim.keymap.set({"i", "n", "o"}, "<C-s>", "<C-g>u<ESC>[s1z=`]a<C-g>u", { desc = "Auto-spell correct"})
 
 -- stylua: ignore end
+
