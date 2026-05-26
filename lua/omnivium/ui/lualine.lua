@@ -55,6 +55,17 @@ return {
               end,
             },
           },
+          lualine_x = {
+            {
+              function()
+                return vim.lsp.status() or ''
+              end,
+              cond = function()
+                return #vim.lsp.get_clients({ bufnr = 0 }) > 0
+              end,
+              desc = 'LSP status',
+            },
+          },
         },
         inactive_sections = {
           lualine_b = {
