@@ -14,6 +14,6 @@ return {
   -- { import = MP:relpath('noice') },
   -- { import = MP:relpath('scope') },
   -- { import = MP:relpath('smart-splits') },
-  -- { import = MP:relpath('trouble') },
+  { import = MP:relpath('trouble') },
   -- { import = MP:relpath('zen-mode') },
 }

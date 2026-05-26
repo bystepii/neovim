@@ -458,7 +458,7 @@ inputs:
           #     smart-splits-nvim
           #     tabby-nvim
           todo-comments-nvim
-          #     trouble-nvim
+          trouble-nvim
           which-key-nvim
           #     # ---- Additional from introdus ----
           #     # snacks-nvim     # needs patching — see snacks override below
