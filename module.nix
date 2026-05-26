@@ -370,6 +370,7 @@ inputs:
           nixfmt
           rustfmt
           ruff
+          terraform
           yamlfmt
           #     prettier
           stylua

@@ -20,6 +20,7 @@ return {
           zsh = { 'shfmt' },
           json = { 'fixjson', 'prettier' },
           yaml = { 'yamlfmt', 'prettier' },
+          terraform = { 'terraform' },
           toml = { 'taplo' },
           -- Use a sub-list to run only the first available formatter
           -- javascript = { { "prettierd", "prettier" } },
@@ -28,6 +29,11 @@ return {
           kdlfmt = {
             command = 'kdlfmt',
             args = { 'format', '--kdl-version', 'v1', '--stdin' },
+            stdin = true,
+          },
+          terraform = {
+            command = 'terraform',
+            args = { 'fmt', '-' },
             stdin = true,
           },
         },
