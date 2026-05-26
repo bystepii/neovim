@@ -1,4 +1,7 @@
 vim.filetype.add({
+  extension = {
+    tfvars = 'terraform',
+  },
   filename = {
     ['zshrc'] = 'zsh',
     ['zshenv'] = 'zsh',
