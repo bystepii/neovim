@@ -385,6 +385,7 @@ inputs:
         data = with pkgs.vimPlugins; [
           #     lazydev-nvim
           #     SchemaStore-nvim
+          crates-nvim
           nvim-lspconfig
           copilot-lsp
         ];
@@ -411,6 +412,7 @@ inputs:
           nix-doc
           pyright
           ruff
+          rust-analyzer
           #     taplo
           #     typos-lsp
           #     vscode-json-languageserver

@@ -82,5 +82,7 @@ return {
   { import = MP:relpath('markdown') },
   { import = MP:relpath('nix') },
   { import = MP:relpath('python') },
+  { import = MP:relpath('rust') },
+  { import = MP:relpath('crates') },
   { import = MP:relpath('spell') },
 }

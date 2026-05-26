@@ -82,6 +82,9 @@ vim.keymap.set("x", "<leader>P", '"_dP',
 local l = "<leader>l"
 vim.keymap.set("n", l .. "x", vim.cmd.LspStop,  { desc = 'Turn of LSP' })
 vim.keymap.set("n", l .. "o", vim.cmd.LspStart, { desc = 'Turn on LSP' })
+vim.keymap.set('n', '<leader>ti', function()
+  vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+end, { desc = 'Toggle LSP inlay hints' })
 
 --
 -- [[ Window/split motions ]]
