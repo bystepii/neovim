@@ -331,6 +331,7 @@ inputs:
               (pkgs.vimPlugins.nvim-treesitter.withPlugins (
                 plugins: with plugins; [
                   bash
+                  hcl
                   html
                   json
                   json5
