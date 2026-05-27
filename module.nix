@@ -317,6 +317,7 @@ inputs:
               mini-ai
               mini-surround
               nvim-autopairs
+              undotree
               #         resession-nvim
               #         vim-easy-align
               #         nvim-treesitter-context

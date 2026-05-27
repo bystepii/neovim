@@ -11,4 +11,5 @@ return {
   -- { import = MP:relpath('resession') },
   { import = MP:relpath('todo-comments') },
   { import = MP:relpath('treesitter') },
+  { import = MP:relpath('undotree') },
 }
