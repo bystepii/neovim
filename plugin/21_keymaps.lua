@@ -80,8 +80,18 @@ vim.keymap.set("x", "<leader>P", '"_dP',
 --
 -- Also see ./../lua/lsp/init.lua
 local l = "<leader>l"
-vim.keymap.set("n", l .. "x", vim.cmd.LspStop,  { desc = 'Turn of LSP' })
-vim.keymap.set("n", l .. "o", vim.cmd.LspStart, { desc = 'Turn on LSP' })
+vim.keymap.set('n', l .. 'x', function()
+  local clients = vim.lsp.get_clients({ bufnr = 0 })
+  for _, client in ipairs(clients) do
+    client:stop()
+  end
+  vim.notify('Stopped ' .. #clients .. ' LSP client(s)', vim.log.levels.INFO)
+end, { desc = 'Turn off LSPs for current buffer' })
+
+vim.keymap.set('n', l .. 'o', function()
+  local ft = vim.bo.filetype
+  vim.notify('LSPs auto-start by filetype (' .. ft .. '). Use :lsp start <name> for manual control.', vim.log.levels.INFO)
+end, { desc = 'LSP info (auto-start by filetype)' })
 vim.keymap.set('n', '<leader>ti', function()
   vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
 end, { desc = 'Toggle LSP inlay hints' })

@@ -28,14 +28,37 @@ return {
       vim.lsp.enable(plugin.name)
     end,
     before = function(_)
-      vim.lsp.config('*', {
-        on_attach = function(_, bufnr)
+      -- Blacklist unwanted bundled LSP from nvim-lspconfig
+      vim.lsp.enable('gitlab_duo', false)
+
+      -- Set up keymaps on LspAttach (fires after ANY LSP attaches, bypassing on_attach merge issues)
+      vim.api.nvim_create_autocmd('LspAttach', {
+        group = vim.api.nvim_create_augroup('omnivium-lsp-keymaps', { clear = true }),
+        callback = function(args)
+          local bufnr = args.buf
+          local client = vim.lsp.get_client_by_id(args.data.client_id)
+          if not client then
+            return
+          end
+
+          -- Ensure telescope is loaded before using it in keymaps
+          local ok_telescope, tb = pcall(require, 'telescope.builtin')
+          if not ok_telescope then
+            vim.notify('Telescope not loaded, skipping LSP telescope keymaps', vim.log.levels.WARN)
+            tb = nil
+          end
+
           local nmap = function(keys, func, desc)
             if desc then
               desc = 'LSP: ' .. desc
             end
-
-            vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
+            local ok, err = pcall(vim.keymap.set, 'n', keys, func, { buffer = bufnr, desc = desc })
+            if not ok then
+              vim.notify(
+                'Failed to set LSP keymap ' .. keys .. ': ' .. tostring(err),
+                vim.log.levels.ERROR
+              )
+            end
           end
 
           -- Disable the LSP's formatting expression so 'gqgc' works (gwgc also
@@ -44,16 +67,17 @@ return {
           vim.bo[bufnr].formatexpr = nil
 
           local l = '<leader>l'
-          local tb = require('telescope.builtin')
           -- stylua: ignore start
           nmap('gd',      vim.lsp.buf.definition,              '[G]oto [D]efinition')
           -- nmap('gr',      tb.lsp_references,                   '[G]oto [R]eferences')
 
           -- nmap(l .. 'd',  vim.lsp.buf.definition,              'Goto [D]efinition')
-          nmap(l .. 'R',  tb.lsp_references,                   'Goto [R]eferences')
-          nmap(l .. 'I',  tb.lsp_implementations,              'Goto [I]mplementation')
-          nmap(l .. 'ds', tb.lsp_document_symbols,             '[D]ocument [S]ymbols')
-          nmap(l .. 'ws', tb.lsp_dynamic_workspace_symbols,    '[W]orkspace [S]ymbols')
+          if tb then
+            nmap(l .. 'R',  tb.lsp_references,                   'Goto [R]eferences')
+            nmap(l .. 'I',  tb.lsp_implementations,              'Goto [I]mplementation')
+            nmap(l .. 'ds', tb.lsp_document_symbols,             '[D]ocument [S]ymbols')
+            nmap(l .. 'ws', tb.lsp_dynamic_workspace_symbols,    '[W]orkspace [S]ymbols')
+          end
 
           nmap(l .. 'r',  vim.lsp.buf.rename,                  '[R]ename')
           nmap(l .. 'ca', vim.lsp.buf.code_action,             '[C]ode [A]ction')
