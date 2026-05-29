@@ -42,6 +42,10 @@
       url = "github:fidgetingbits/zen-mode.nvim?ref=fix-terminal";
       flake = false;
     };
+    plugins-direnv-nvim = {
+      url = "github:NotAShelf/direnv.nvim";
+      flake = false;
+    };
   };
 
   outputs =

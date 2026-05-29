@@ -58,6 +58,17 @@ return {
           lualine_x = {
             {
               function()
+                local ok, direnv = pcall(require, 'direnv')
+                return ok and direnv.statusline() or ''
+              end,
+              cond = function()
+                local ok, direnv = pcall(require, 'direnv')
+                return ok and direnv.statusline() ~= ''
+              end,
+              desc = 'direnv status',
+            },
+            {
+              function()
                 return vim.lsp.status() or ''
               end,
               cond = function()

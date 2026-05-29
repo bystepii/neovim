@@ -52,6 +52,22 @@
         "type": "github"
       }
     },
+    "plugins-direnv-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1778743474,
+        "narHash": "sha256-S2AuTMOCiglrvB1mJWEDlSke130GWpnDvMuIapjMyFk=",
+        "owner": "NotAShelf",
+        "repo": "direnv.nvim",
+        "rev": "8962b7fe3f6267db9dd8b2a49f2c6175b7980210",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NotAShelf",
+        "repo": "direnv.nvim",
+        "type": "github"
+      }
+    },
     "plugins-nvim-better-n": {
       "flake": false,
       "locked": {
@@ -154,6 +170,7 @@
         "flake-parts": "flake-parts",
         "nixpkgs": "nixpkgs",
         "plugins-confirm-quit": "plugins-confirm-quit",
+        "plugins-direnv-nvim": "plugins-direnv-nvim",
         "plugins-nvim-better-n": "plugins-nvim-better-n",
         "plugins-nvim-toggler": "plugins-nvim-toggler",
         "plugins-pick-resession": "plugins-pick-resession",

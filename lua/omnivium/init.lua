@@ -88,4 +88,8 @@ nixInfo.lze.load({
     enabled = nixInfo(false, 'settings', 'devMode'),
     category = 'ai',
   },
+  {
+    import = MP:relpath('direnv'),
+    category = 'direnv',
+  },
 })

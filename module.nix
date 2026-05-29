@@ -255,6 +255,18 @@ inputs:
         ];
       };
 
+      # ---- DIRENV SPEC ----
+      specs.direnv = {
+        after = [ "core" ];
+        lazy = true;
+        data = [
+          config.nvim-lib.neovimPlugins.direnv-nvim
+        ];
+        extraPackages = with pkgs; [
+          direnv
+        ];
+      };
+
       # ============================================================================
       # ALL BELOW ARE INTRODUS PLUGINS — COMMENTED OUT BY DEFAULT
       # Uncomment the entire block to enable. Many require nixpkgs plugins;
