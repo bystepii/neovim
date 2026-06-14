@@ -330,7 +330,7 @@ inputs:
               mini-surround
               nvim-autopairs
               undotree
-              #         resession-nvim
+              resession-nvim
               #         vim-easy-align
               #         nvim-treesitter-context
               #         # ---- Additional from introdus (some not in nixpkgs — see below) ----
